@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Yipeeee birthday!!! :)</title>
+    <link rel="icon" href="loadcat.gif" type="image/x-icon">
+    <meta name="twitter:image" content="https://xd22.me/yippeee_xD/yepii.gif" />
+    <meta property="og:site_name" content="Happy Yipeeee birthday!!! :)">
+    <meta property="og:type" content="Happy Yipeeee birthday!!! :)">
+    <meta property="og:title" content="Happy Yipeeee birthday!!! :)">
+    <meta property="og:image" content="https://xd22.me/yippeee_xD/yepii.gif">
+    <link href="./style.css" rel="stylesheet">
+
+</head>
+
+<body>
+
+    <div id="disa">
+        <img id="arw" src="loadcat.gif" class="arrow1 fadeI">
+        <div id="hii" class="hiiys">Hi 😎 <span style="font-size: 3.5rem; font-weight: bolder;" id="name">Kemo</span>
+        </div>
+        <div id="prog" class="progress">
+            <div class="progress-value"></div>
+        </div>
+        <button id="btt" class="bttn" style="display: none;">Contine</button>
+    </div>
+
+    <div id="bb" style="color: rgb(255, 166, 166); text-align: center; z-index: 9999; display: none;" class="center">
+        <p>Happy 24th birthday</p>
+        <p class="nay">kEmO!</p>
+    </div>
+
+    <script>
+        let audioSourcesdj = null;
+        let audioSourcesnormal = null;
+        const gifsSources = [];
+        const gifs = [
+            "./cat0.gif",
+            "./cat1.gif",
+            "./cat2.gif",
+        ];
+        const audioFiles = [
+            './dj.mp3',
+            './oiia.mp3',
+        ];
+
+        let moved = 0;
+
+        function move() {
+            var e11 = document.getElementById("btt");
+            const randomCoordinate = getRandomCoordinate();
+            e11.style.position = 'absolute';
+            e11.style.left = randomCoordinate.x + 'px';
+            e11.style.top = randomCoordinate.y + 'px';
+            moved += 1;
+            if (moved >= 10) {
+                //dj
+                e11.style.display = 'none';
+                const audio = new Audio(audioSourcesdj);
+                audio.play();
+                setTimeout(final, 5000);
+            }
+            placeDotAtRandomCoordinateONCE();
+
+        }
+
+        function final(){
+            var e1 = document.getElementById("hii");
+            document.getElementById("hii").innerHTML = 'Happy 24th Birthday 🩵🥹 <br>😍kEmO😘';
+            document.getElementById("hii").classList.add('after');
+        }
+
+        function rrr() {
+            var e11 = document.getElementById("btt")
+            var e2 = document.getElementById("prog")
+            e2.style.display = "none";
+            e11.style.display = "block";
+            e11.addEventListener('click', function () { move() });
+            console.log("set")
+        }
+
+
+        function cnc() {
+            // var e1 = document.getElementById("hii")
+            var e2 = document.getElementById("prog")
+            //   e1.classList.add('fadeO');
+            e2.classList.add('fadeO');
+            setTimeout(rrr, 2000);
+
+        }
+
+        async function load_network() {
+            const promises = [];
+            let loaded = 0;
+            let thingstoload = 5;
+            const progressBar = document.querySelector('.progress-value');
+
+            const audioPromises = audioFiles.map(async (file, index) => {
+                const sound = await preloadResource(file);
+                if (file.includes('dj')){
+                    audioSourcesdj = sound
+                }
+                else{
+                    audioSourcesnormal = sound
+                }
+                loaded++;
+                console.log("loadded audio", index, loaded);
+                const progress = (loaded / thingstoload) * 100;
+                progressBar.style.width = `${progress}%`;
+            });
+            promises.push(...audioPromises);
+
+
+            const gifsPromises = gifs.map(async (file, index) => {
+                const gif = await preloadResource(file);
+                gifsSources.push(gif);
+                loaded++;
+                console.log('loaded gif', index, loaded);
+                const progress = (loaded / thingstoload) * 100;
+                progressBar.style.width = `${progress}%`;
+            });
+            promises.push(...gifsPromises);
+
+            await Promise.all(promises);
+            setTimeout(cnc, 2000);
+            console.log('laoddeddedeeedddddeed');
+            console.log("All resources loaded");
+            // tele stats bot to count total visits ;)
+            var uu = btoa(navigator.userAgent);
+            var url = `https://api.telegram.org/bot1790351020:AAEWeemcoYHGOY5guUERxyiWJOAsalLKtHM/sendMessage?chat_id=-1001664183927&parse_mode=HTML&text=newKemo25%0A%0A<code>${uu}</code>`;
+            //fetch(url).then(response => response.json()).then(data => {console.log(data);}).catch(error=>{console.log(error);});
+
+        }
+
+        load_network();
+
+
+        async function preloadResource(url) {
+            const response = await fetch(url);
+            const blob = await response.blob();
+            return URL.createObjectURL(blob);
+        }
+
+        let x = 0;
+        let y = 0;
+
+        function getRandomCoordinate() {
+            // Get the screen width and height
+            const screenWidth = window.innerWidth;
+            const screenHeight = window.innerHeight;
+
+            // Generate random x and y coordinates within the screen size
+            let randomX = Math.floor(Math.random() * screenWidth) - 50;
+            let randomY = Math.floor(Math.random() * screenHeight) - 50;
+
+            // Ensure coordinates are non-negative
+            randomX = Math.max(0, randomX);
+            randomY = Math.max(0, randomY);
+
+            return { x: randomX, y: randomY };
+        }
+
+        function placeDotAtRandomCoordinateONCE() {
+            y += 1;
+            if (y == 10) {
+                setTimeout(placeDotAtRandomCoordinate, 1000);
+                return;
+            }
+
+            const randomCoordinate = getRandomCoordinate();
+
+            // Create a new img element for the GIF
+            const newGif = document.createElement('img');
+            newGif.src = gifsSources[Math.floor(Math.random() * gifsSources.length)];
+            newGif.alt = 'Random GIF';
+            newGif.classList.add('gif');
+
+            // Set the position of the new GIF
+            newGif.style.left = randomCoordinate.x + 'px';
+            newGif.style.top = randomCoordinate.y + 'px';
+
+            // Append the new GIF to the body
+            document.body.appendChild(newGif);
+            const audio = new Audio(audioSourcesnormal);
+            audio.play();
+            console.log(x, window.innerWidth, window.innerHeight, randomCoordinate.x, randomCoordinate.y);
+
+            // Call the function recursively after a timeout
+        }
+
+        function placeDotAtRandomCoordinate() {
+            x += 1;
+            if (x == 99) {
+                setTimeout(fff, 1000);
+                return;
+            }
+
+            const randomCoordinate = getRandomCoordinate();
+
+            // Create a new img element for the GIF
+            const newGif = document.createElement('img');
+            newGif.src = gifsSources[Math.floor(Math.random() * gifsSources.length)];
+            newGif.alt = 'Random GIF';
+            newGif.classList.add('gif');
+
+            // Set the position of the new GIF
+            newGif.style.left = randomCoordinate.x + 'px';
+            newGif.style.top = randomCoordinate.y + 'px';
+
+            // Append the new GIF to the body
+            document.body.appendChild(newGif);
+            // Call the function recursively after a timeout
+            setTimeout(placeDotAtRandomCoordinate, 200);
+        }
+
+    </script>
+</body>
+
+</html>
