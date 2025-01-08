@@ -59,7 +59,7 @@ body {
   font-style: normal;
   font-weight: 300;
   font-stretch: normal;
-  src: url('/Computerfont.ttf') format('truetype');
+  src: url('./Computerfont.ttf') format('truetype');
 }
 
 * {
